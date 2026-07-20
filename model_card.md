@@ -1,111 +1,96 @@
 # 🎧 Model Card: Music Recommender Simulation
 
-## 1. Model Name  
+## 1. Model Name
 
-Give your model a short, descriptive name.  
-Example: **VibeFinder 1.0**  
-
----
-
-## 2. Intended Use  
-
-Describe what your recommender is designed to do and who it is for. 
-
-Prompts:  
-
-- What kind of recommendations does it generate  
-- What assumptions does it make about the user  
-- Is this for real users or classroom exploration  
+**VibeFinder 1.0**
 
 ---
 
-## 3. How the Model Works  
+## 2. Intended Use
 
-Explain your scoring approach in simple language.  
+VibeFinder 1.0 is a music recommendation system designed to simulate how streaming platforms match user preferences to songs.
 
-Prompts:  
-
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
-
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+- **Generated Output**: Ranked lists of songs with breakdowns explaining why each song was selected.
+- **User Assumptions**: Assumes the user can specify target preferences (favorite genre, mood, target energy, and acoustic instrument preference).
+- **Target Audience**: Designed for exploration and algorithmic evaluation, not for production use.
 
 ---
 
-## 4. Data  
+## 3. How the Model Works
 
-Describe the dataset the model uses.  
+VibeFinder 1.0 uses a content-based scoring algorithm that evaluates songs one by one:
 
-Prompts:  
-
-- How many songs are in the catalog  
-- What genres or moods are represented  
-- Did you add or remove data  
-- Are there parts of musical taste missing in the dataset  
-
----
-
-## 5. Strengths  
-
-Where does your system seem to work well  
-
-Prompts:  
-
-- User types for which it gives reasonable results  
-- Any patterns you think your scoring captures correctly  
-- Cases where the recommendations matched your intuition  
+- **Song Attributes**: Analyzes categorical traits (genre, mood) and numerical traits (energy, acousticness, valence).
+- **User Preferences**: Accepts target values for favorite genre, favorite mood, energy level (0.0 to 1.0), and acoustic preference (acoustic vs. electronic).
+- **Scoring Rule**:
+  - Awards **+3.0 points** for an exact genre match.
+  - Awards **+2.0 points** for a matching mood.
+  - Awards up to **+2.0 points** based on how close the song's energy is to the user's target energy.
+  - Awards up to **+1.5 points** based on how closely the song's acousticness aligns with the user's preference.
+  - Awards a **+0.5 point bonus** for happy, positive songs.
+- **Ranking Rule**: Tracks are sorted from highest to lowest score, and the top tracks are returned to the user.
 
 ---
 
-## 6. Limitations and Bias 
+## 4. Data
 
-Where the system struggles or behaves unfairly. 
-
-Prompts:  
-
-- Features it does not consider  
-- Genres or moods that are underrepresented  
-- Cases where the system overfits to one preference  
-- Ways the scoring might unintentionally favor some users  
+- **Catalog Size**: 18 songs loaded from data/songs.csv.
+- **Genre Coverage**: Pop, Indie Pop, Lofi, Rock, Metal, Reggae, Hip Hop, Blues, EDM, Folk, World, Jazz, Ambient, and Classical.
+- **Data Attributes**: Each entry includes title, artist, genre, mood, energy, tempo_bpm, valence, danceability, and acousticness.
+- **Missing Elements**: The dataset does not include audio recordings, lyrics, language tags, user listening history, or release dates.
 
 ---
 
-## 7. Evaluation  
+## 5. Strengths
 
-How you checked whether the recommender behaved as expected. 
-
-Prompts:  
-
-- Which user profiles you tested  
-- What you looked for in the recommendations  
-- What surprised you  
-- Any simple tests or comparisons you ran  
-
-No need for numeric metrics unless you created some.
+- **High Transparency & Explainability**: Every recommendation includes a step-by-step breakdown of how points were awarded.
+- **Accurate Vibe Matching**: For distinct listener profiles, top recommendations align strongly with human intuition.
+- **Predictable Behavior**: Deterministic scoring makes it easy to test and debug ranking logic.
 
 ---
 
-## 8. Future Work  
+## 6. Limitations and Bias
 
-Ideas for how you would improve the model next.  
-
-Prompts:  
-
-- Additional features or preferences  
-- Better ways to explain recommendations  
-- Improving diversity among the top results  
-- Handling more complex user tastes  
+- **Catalog Size Constraint**: With only 18 songs, recommendations can feel repetitive.
+- **Genre Dominance Bias**: Because genre matches receive a heavy point weight (+3.0), the system may ignore great songs from other genres that match the user's energy and mood perfectly.
+- **Lack of Deep Audio Understanding**: The model relies on static CSV metadata rather than analyzing actual audio frequencies or song structure.
+- **Filter Bubble Risk**: Users are repeatedly shown content inside their narrow preference parameters, missing out on musical discovery.
 
 ---
 
-## 9. Personal Reflection  
+## 7. Evaluation
 
-A few sentences about your experience.  
+- **Tested Profiles**:
+  1. Upbeat Pop Lover (genre: pop, mood: happy, energy: 0.8) -> Top result: Sunrise City (Score 8.69)
+  2. Chill Lofi Listener (genre: lofi, mood: chill, energy: 0.35) -> Top result: Library Rain (Score 8.29)
+  3. High Energy Workout (genre: rock, mood: intense, energy: 0.95) -> Top result: Storm Runner (Score 8.27)
+- **Observations**: Shifting the point weight from genre to energy dramatically changed rankings, proving how algorithmic weights control recommendations.
+- **Profile Comparisons**:
+  - EDM vs. Acoustic Folk: The EDM profile favors high energy synthesized beats, while the acoustic folk profile shifts recommendations toward low-energy acoustic instrumentation.
+  - Rock vs. Pop: High-energy rock profiles prioritize intensity and genre over calm tracks, showing that energy distance penalties successfully penalize mismatched vibes.
 
-Prompts:  
+---
 
-- What you learned about recommender systems  
-- Something unexpected or interesting you discovered  
-- How this changed the way you think about music recommendation apps  
+## 8. Future Work
+
+Ideas for how you would improve the model next.
+
+Prompts:
+
+- Additional features or preferences
+  - Add support for listening history to be factored into recommendations
+- Better ways to explain recommendations
+- Improving diversity among the top results
+- Handling more complex user tastes
+
+---
+
+## 9. Personal Reflection
+
+A few sentences about your experience.
+
+Prompts:
+
+- What you learned about recommender systems
+- Something unexpected or interesting you discovered
+- How this changed the way you think about music recommendation apps

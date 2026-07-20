@@ -2,7 +2,7 @@
 
 ## Project Summary
 
-VibeFinder 1.0 is a music recommendation engine designed to connect a user's personal taste profile with matching songs in a playlist. This simulation compares song characteristics—such as genre, mood, energy level, acoustic attributes, and valence—against user preferences. The system computes a numeric score for every track and presents a ranked list of top recommendations with reasons for each suggestion.
+VibeFinder 1.0 is a music recommendation engine designed to connect a user's personal taste profile with matching songs in a catalog. This simulation compares song characteristics—such as genre, mood, energy level, acoustic attributes, and valence—against user preferences. The system computes a numeric score for every track and presents a ranked list of top recommendations with reasons for each suggestion.
 
 ---
 
@@ -12,7 +12,7 @@ Our music recommender turns raw data into personalized suggestions through a two
 
 ### 1. Data Representation
 
-- **Song Attributes**: Every track in `data/songs.csv` contains structured features:
+- **Song Attributes**: Every track in data/songs.csv contains structured features:
   - `genre` (pop, lofi, rock, jazz, edm, classical, metal, reggae, hip hop, blues, folk, world)
   - `mood` (happy, chill, intense, focused, aggressive, dramatic, nostalgic)
   - `energy` (scale from 0.0 for calm to 1.0 for high intensity)
@@ -38,11 +38,11 @@ To evaluate how well a song fits a user's profile, the system computes a numeric
 2. **Mood Match** (+2.0 points):
    - +2.0 points if the song's mood matches favorite_mood.
 3. **Energy Proximity** (+2.0 max points):
-   - Calculates energy difference: `distance = |song_energy - target_energy|`.
-   - Proximity score: `2.0 * (1.0 - distance)`. A track with identical energy gains +2.0 points, while larger differences receive proportionately fewer points.
+   - Calculates energy difference: distance = |song_energy - target_energy|.
+   - Proximity score: 2.0 \* (1.0 - distance). A track with identical energy gains +2.0 points, while larger differences receive proportionately fewer points.
 4. **Acoustic Preference** (+1.5 max points):
-   - If likes_acoustic is True: `1.5 * song_acousticness`.
-   - If likes_acoustic is False: `1.5 * (1.0 - song_acousticness)`.
+   - If likes_acoustic is True: 1.5 \* song_acousticness.
+   - If likes_acoustic is False: 1.5 \* (1.0 - song_acousticness).
 5. **Upbeat Vibe Bonus** (+0.5 points):
    - +0.5 points if the user wants a "happy" mood and the song has high valence (>= 0.7).
 
@@ -54,13 +54,12 @@ The individual points are added together to yield the final track score along wi
 
 1. **Catalog Scanning**: The system loops through all songs loaded from data/songs.csv.
 2. **Scoring**: The score_song function evaluates each track and generates its total score and explanation breakdown.
-3. **Sorting**: The songs are sorted in descending order by their numeric score (`sorted(key=score, reverse=True)`).
+3. **Sorting**: The songs are sorted in descending order by their numeric score (sorted(key=score, reverse=True)).
 4. **Selection**: The system selects the top k highest-scoring tracks (default k=3 or k=5) to display to the user.
 
 ### Potential Bias Note
 
 Because genre matches carry heavy point values (+3.0), this scoring logic might over-prioritize genre, ignoring great songs in adjacent genres that match the user's mood or energy perfectly.
-
 
 ---
 
