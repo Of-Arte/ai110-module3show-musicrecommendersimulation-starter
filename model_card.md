@@ -73,24 +73,14 @@ VibeFinder 1.0 uses a content-based scoring algorithm that evaluates songs one b
 
 ## 8. Future Work
 
-Ideas for how you would improve the model next.
-
-Prompts:
-
-- Additional features or preferences
-  - Add support for listening history to be factored into recommendations
-- Better ways to explain recommendations
-- Improving diversity among the top results
-- Handling more complex user tastes
+- Add support for listening history to be factored into recommendations
+- Add support for user feedback (thumbs up/down) to be factored into recommendations
+- Add more context to the explanations, such as the user's listening history
 
 ---
 
 ## 9. Personal Reflection
 
-A few sentences about your experience.
-
-Prompts:
-
-- What you learned about recommender systems
-- Something unexpected or interesting you discovered
-- How this changed the way you think about music recommendation apps
+- Building VibeFinder showed me how music streaming platforms translate human preferences into concrete mathematical scores.
+- I was surprised that adjusting the weights of the scoring algorithm could have such a dramatic impact on the recommendations.
+- I have a deeper appreciation for recommendation systems and the challenges of creating a system that balances personalization with discovery.
